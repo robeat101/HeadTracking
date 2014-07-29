@@ -44,7 +44,7 @@
         		TextWrapping="Wrap" 
         		Text="NeckPositionX" 
         		VerticalAlignment="Bottom" 
-        		TextChanged="neckPosition_TextChanged" Margin="0,0,0,0.4" Grid.RowSpan="2"/>
+        	    Margin="0,0,0,0.4" Grid.RowSpan="2"/>
                 <TextBox x:Name="neckPositionY"
         		HorizontalAlignment="Left" 
         		TextWrapping="Wrap" 
@@ -64,7 +64,7 @@
         		Text="HeadPositionX" 
         		VerticalAlignment="Bottom" 
         		Grid.Row="1" 
-        		TextChanged="neckPosition_TextChanged" Grid.RowSpan="2"/>
+        		Grid.RowSpan="2"/>
                 <TextBox x:Name="headPositionY"
         		HorizontalAlignment="Left" 
         		TextWrapping="Wrap" 
@@ -76,8 +76,7 @@
         		TextWrapping="Wrap" 
         		Text="HeadPositionZ" 
         		VerticalAlignment="Bottom" 
-        		Grid.Row="2
-                     " Margin="160,0,0,-4" />
+        		Grid.Row="2" Margin="160,0,0,-4" />
             </Grid>
         </StackPanel>
     </Grid>

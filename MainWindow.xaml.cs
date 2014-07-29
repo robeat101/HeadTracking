@@ -96,11 +96,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private CoordinateMapper coordinateMapper = null;
 
         /// <summary>
-        /// Reader for body frames
-        /// </summary>
-        private BodyFrameReader bodyFrameReader = null;
-
-        /// <summary>
         /// Reader for face frames
         /// </summary>
         private FaceFrameReader faceFrameReader = null;
@@ -113,7 +108,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// <summary>
         /// Array for the bodies
         /// </summary>
-        private FaceModel face= null;
+        private FaceModel face = null;
 
         /// <summary>
         /// definition of bones
@@ -165,7 +160,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
 #if false
             // open the reader for the body frames
-            this.bodyFrameReader = this.kinectSensor.BodyFrameSource.OpenReader();
+            this.faceFrameReader = this.kinectSensor.BodyFrameSource.OpenReader();
 
             // a bone defined as a line between two joints
             this.bones = new List<Tuple<JointType, JointType>>();
@@ -288,9 +283,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// <param name="e">event arguments</param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.bodyFrameReader != null)
+            if (this.faceFrameReader != null)
             {
-                this.bodyFrameReader.FrameArrived += this.Reader_FrameArrived;
+                this.faceFrameReader.FrameArrived += this.Reader_FrameArrived;
             }
         }
 
@@ -301,11 +296,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// <param name="e">event arguments</param>
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (this.bodyFrameReader != null)
+            if (this.faceFrameReader != null)
             {
-                // BodyFrameReader is IDisposable
-                this.bodyFrameReader.Dispose();
-                this.bodyFrameReader = null;
+                // faceFrameReader is IDisposable
+                this.faceFrameReader.Dispose();
+                this.faceFrameReader = null;
             }
 
             if (this.kinectSensor != null)
@@ -320,23 +315,23 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>
-        private void Reader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
+        private void Reader_FrameArrived(object sender, FaceFrameArrivedEventArgs e)
         {
             bool dataReceived = false;
 
-            using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
+            using (FaceFrame faceFrame = e.FrameReference.AcquireFrame())
             {
-                if (bodyFrame != null)
+                if (faceFrame != null)
                 {
-                    if (this.bodies == null)
+                    if (this.face == null)
                     {
-                        this.bodies = new Body[bodyFrame.BodyCount];
+                        this.face = new FaceModel();
                     }
 
                     // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
                     // As long as those body objects are not disposed and not set to null in the array,
                     // those body objects will be re-used.
-                    bodyFrame.GetAndRefreshBodyData(this.bodies);
+                    //bodyFrame.GetAndRefreshBodyData(this.bodies);
                     dataReceived = true;
                 }
             }
@@ -348,8 +343,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     // Draw a transparent background to set the render size
                     dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
 
-                    int penIndex = 0;
-                    foreach (Body body in this.bodies)
+                    //int penIndex = 0;
+#if false
+		 foreach (Face in this.bodies)
                     {
                         Pen drawPen = this.bodyColors[penIndex++];
 
@@ -394,7 +390,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                             this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
                             this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
-                    }
+                    }  
+#endif
 
                     // prevent drawing outside of our render area
                     this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));

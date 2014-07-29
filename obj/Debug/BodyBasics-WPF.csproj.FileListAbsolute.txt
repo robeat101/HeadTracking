@@ -14,13 +14,12 @@ C:\Users\t-roban\Documents\Kinect Studio\BodyBasics-WPF\obj\Debug\BodyBasics-WPF
 C:\Users\t-roban\Documents\Kinect Studio\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.exe
 C:\Users\t-roban\Documents\Kinect Studio\BodyBasics-WPF\obj\Debug\BodyBasics-WPF.pdb
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\bin\AnyCPU\Debug\BodyBasics-WPF.exe.config
-C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.exe
-C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.pdb
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\bin\AnyCPU\Debug\BodyBasics-WPF.exe
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\bin\AnyCPU\Debug\BodyBasics-WPF.pdb
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\bin\AnyCPU\Debug\Microsoft.Kinect.dll
+C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\bin\AnyCPU\Debug\Microsoft.Kinect.Face.dll
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\bin\AnyCPU\Debug\Microsoft.Kinect.xml
-C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.csprojResolveAssemblyReference.cache
+C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\bin\AnyCPU\Debug\Microsoft.Kinect.Face.xml
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\MainWindow.baml
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\MainWindow.g.cs
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\App.g.cs
@@ -28,5 +27,5 @@ C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyB
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.g.resources
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\Microsoft.Samples.Kinect.BodyBasics.Properties.Resources.resources
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.csproj.GenerateResource.Cache
-C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\bin\AnyCPU\Debug\Microsoft.Kinect.Face.dll
-C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\bin\AnyCPU\Debug\Microsoft.Kinect.Face.xml
+C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.exe
+C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.pdb
