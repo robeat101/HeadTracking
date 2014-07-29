@@ -1,84 +1,73 @@
-﻿<Window x:Class="Microsoft.Samples.Kinect.BodyBasics.MainWindow"
+﻿<Window x:Class="K4W.Expressions.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Body Basics" 
-        Height="749.254" Width="727.463" 
-        Loaded="MainWindow_Loaded"
-        Closing="MainWindow_Closing">
-    <Window.Resources>
-        <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
-        <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
-        <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
-    </Window.Resources>
-    <Grid Margin="10,0,3.8,0" Height="591" VerticalAlignment="Top">
+        Height="720" Width="1400" Icon="Resources/icon.png"
+        Title="Kinecting for Windows - First look at Expressions">
+    <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="120px" />
+            <RowDefinition Height="2"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" Source="Images\Logo.png" HorizontalAlignment="Left" Stretch="Fill" Height="32" Width="81" Margin="0 10 0 5" />
-        <TextBlock Grid.Row="0" Margin="0 0 -1 0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontFamily="Segoe UI" FontSize="18">Body Basics</TextBlock>
-        <Image Grid.Row="0" Source="Images\Status.png" Stretch="None" HorizontalAlignment="Center" Margin="0 0 0 5" />
 
-        <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-            <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
-        </Viewbox>
-
-        <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
-            <StatusBarItem Content="{Binding StatusText}" />
-        </StatusBar>
-        <StackPanel Margin="0,16.2,0,-107.8" Grid.Row="2">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="373*"/>
-                    <ColumnDefinition Width="334*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <TextBox x:Name="neckPositionX"
-        		    HorizontalAlignment="Left" 
-        		TextWrapping="Wrap" 
-        		Text="NeckPositionX" 
-        		VerticalAlignment="Bottom" 
-        	    Margin="0,0,0,0.4" Grid.RowSpan="2"/>
-                <TextBox x:Name="neckPositionY"
-        		HorizontalAlignment="Left" 
-        		TextWrapping="Wrap" 
-        		Text="NeckPositionY" 
-        		VerticalAlignment="Bottom" 
-        		Margin="80,0,0,0.4" Grid.RowSpan="2" />
-                <TextBox x:Name="neckPositionZ"
-        		HorizontalAlignment="Left" 
-        		TextWrapping="Wrap" 
-        		Text="NeckPositionZ" 
-        		VerticalAlignment="Bottom" 
-        		Margin="160,0,0,15" Grid.RowSpan="3" />
-
-                <TextBox x:Name="headPositionX"
-        		HorizontalAlignment="Left" 
-        		TextWrapping="Wrap" 
-        		Text="HeadPositionX" 
-        		VerticalAlignment="Bottom" 
-        		Grid.Row="1" 
-        		Grid.RowSpan="2"/>
-                <TextBox x:Name="headPositionY"
-        		HorizontalAlignment="Left" 
-        		TextWrapping="Wrap" 
-        		Text="HeadPositionY" 
-        		VerticalAlignment="Bottom" 
-        		Grid.Row="2" Margin="80,0,0,-1" />
-                <TextBox x:Name="headPositionZ"
-        		HorizontalAlignment="Left" 
-        		TextWrapping="Wrap" 
-        		Text="HeadPositionZ" 
-        		VerticalAlignment="Bottom" 
-        		Grid.Row="2" Margin="160,0,0,-4" />
-            </Grid>
+        <!-- Header -->
+        <StackPanel HorizontalAlignment="Left" Margin="10" Orientation="Horizontal">
+            <Image Source="Resources/k4w.png" HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="100" />
+            <TextBlock Text="Second Generation Kinect - First look at Expressions" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="20,0,0,0" Foreground="#FF2A2A2A" />
         </StackPanel>
-    </Grid>
 
+        <!-- Seperator -->
+        <Rectangle x:Name="Seperator" Fill="Black" Grid.Row="1" />
+
+        <!-- Content -->
+        <Grid x:Name="Content" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="960" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- Camera output -->
+            <Image x:Name="CameraImage" Width="960" Height="540" Grid.RowSpan="8" RenderTransformOrigin="0.5,0.5" >
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                        <SkewTransform AngleY="0" AngleX="0"/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+
+            <!-- Face Properties -->
+            <Label Grid.Column="1" Content="Happy" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="1" Content="Engaged" Grid.Row="1" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="1" Content="Wearing Glasses" Grid.Row="2" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="1" Content="Left Eye Closed" Grid.Row="3" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="1" Content="Right Eye Closed" Grid.Row="4" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="1" Content="Mouth Open" Grid.Row="5" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="1" Content="Mouth Moved" Grid.Row="6" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="1" Content="Looking Away" Grid.Row="7" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+
+            <!-- Tracking Results -->
+            <TextBlock x:Name="HappyResult" Grid.Column="2" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No face tracked" />
+            <TextBlock x:Name="EngagedResult" Grid.Column="2" Grid.Row="1" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No face tracked" />
+            <TextBlock x:Name="GlassesResult" Grid.Column="2" Grid.Row="2" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No face tracked" />
+            <TextBlock x:Name="LeftEyeResult" Grid.Column="2" Grid.Row="3" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No face tracked" />
+            <TextBlock x:Name="RightEyeResult" Grid.Column="2" Grid.Row="4" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No face tracked" />
+            <TextBlock x:Name="MouthOpenResult" Grid.Column="2" Grid.Row="5" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No face tracked" />
+            <TextBlock x:Name="MouthMovedResult" Grid.Column="2" Grid.Row="6" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No face tracked" />
+            <TextBlock x:Name="LookingAwayResult" Grid.Column="2" Grid.Row="7" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No face tracked" />
+        </Grid>
+    </Grid>
 </Window>

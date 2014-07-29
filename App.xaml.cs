@@ -1,16 +1,15 @@
-﻿//------------------------------------------------------------------------------
-// <copyright file="App.xaml.cs" company="Microsoft">
-//     Copyright (c) Microsoft Corporation.  All rights reserved.
-// </copyright>
-//------------------------------------------------------------------------------
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
-namespace Microsoft.Samples.Kinect.BodyBasics
+namespace K4W.Expressions
 {
-    using System;
-    using System.Windows;
-
     /// <summary>
-    /// Interaction logic for App
+    /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
