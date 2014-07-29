@@ -18,6 +18,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using Microsoft.Kinect;
     using Microsoft.Kinect.Face;
 
+
     /// <summary>
     /// Interaction logic for MainWindow
     /// </summary>
@@ -88,6 +89,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// </summary>
         private KinectSensor kinectSensor = null;
 
+
         /// <summary>
         /// Coordinate mapper to map one type of point to another
         /// </summary>
@@ -99,9 +101,19 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private BodyFrameReader bodyFrameReader = null;
 
         /// <summary>
+        /// Reader for face frames
+        /// </summary>
+        private FaceFrameReader faceFrameReader = null;
+
+        /// <summary>
         /// Array for the bodies
         /// </summary>
         private Body[] bodies = null;
+
+        /// <summary>
+        /// Array for the bodies
+        /// </summary>
+        private FaceModel face= null;
 
         /// <summary>
         /// definition of bones
@@ -146,6 +158,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.displayWidth = frameDescription.Width;
             this.displayHeight = frameDescription.Height;
 
+            this.faceFrameReader = new FaceFrameSource(kinectSensor).OpenReader();
+
+
+
+
+#if false
             // open the reader for the body frames
             this.bodyFrameReader = this.kinectSensor.BodyFrameSource.OpenReader();
 
@@ -157,7 +175,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.bones.Add(new Tuple<JointType, JointType>(JointType.Neck, JointType.SpineShoulder));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.SpineMid));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineMid, JointType.SpineBase));
-#if false
+
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.ShoulderRight));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.ShoulderLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineBase, JointType.HipRight));
@@ -186,18 +204,19 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.bones.Add(new Tuple<JointType, JointType>(JointType.HipLeft, JointType.KneeLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.KneeLeft, JointType.AnkleLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.AnkleLeft, JointType.FootLeft)); 
-#endif
 
+#endif
             // populate body colors, one for each BodyIndex
             this.bodyColors = new List<Pen>();
 
             this.bodyColors.Add(new Pen(Brushes.Red, 6));
+#if false
             this.bodyColors.Add(new Pen(Brushes.Orange, 6));
             this.bodyColors.Add(new Pen(Brushes.Green, 6));
             this.bodyColors.Add(new Pen(Brushes.Blue, 6));
             this.bodyColors.Add(new Pen(Brushes.Indigo, 6));
             this.bodyColors.Add(new Pen(Brushes.Violet, 6));
-
+#endif
             // set IsAvailableChanged event notifier
             this.kinectSensor.IsAvailableChanged += this.Sensor_IsAvailableChanged;
 
