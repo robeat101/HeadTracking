@@ -157,6 +157,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.bones.Add(new Tuple<JointType, JointType>(JointType.Neck, JointType.SpineShoulder));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.SpineMid));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineMid, JointType.SpineBase));
+#if false
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.ShoulderRight));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.ShoulderLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineBase, JointType.HipRight));
@@ -184,7 +185,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             // Left Leg
             this.bones.Add(new Tuple<JointType, JointType>(JointType.HipLeft, JointType.KneeLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.KneeLeft, JointType.AnkleLeft));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.AnkleLeft, JointType.FootLeft));
+            this.bones.Add(new Tuple<JointType, JointType>(JointType.AnkleLeft, JointType.FootLeft)); 
+#endif
 
             // populate body colors, one for each BodyIndex
             this.bodyColors = new List<Pen>();
@@ -356,7 +358,15 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
                                 if(jointType == JointType.Neck)
                                 {
-                                    neckPosition.Text = depthSpacePoint.X.ToString();
+                                    neckPositionX.Text = depthSpacePoint.X.ToString();
+                                    neckPositionY.Text = depthSpacePoint.Y.ToString();
+                                    //neckPositionZ.Text = depthSpacePoint.Z.ToString();
+                                }
+                                if (jointType == JointType.Head)
+                                {
+                                    headPositionX.Text = depthSpacePoint.X.ToString();
+                                    headPositionY.Text = depthSpacePoint.Y.ToString();
+                                    //neckPositionZ.Text = depthSpacePoint.Z.ToString();
                                 }
                             }
 
