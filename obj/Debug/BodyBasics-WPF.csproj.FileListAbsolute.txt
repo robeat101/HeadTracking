@@ -29,3 +29,6 @@ C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\Micro
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.csproj.GenerateResource.Cache
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.exe
 C:\Users\t-roban\Documents\Kinect Studio\Repository\HeadTracking\obj\Debug\BodyBasics-WPF.pdb
+C:\Headtracking\HeadTracking\bin\AnyCPU\Debug\BodyBasics-WPF.exe.config
+C:\Headtracking\HeadTracking\obj\Debug\BodyBasics-WPF.exe
+C:\Headtracking\HeadTracking\obj\Debug\BodyBasics-WPF.pdb

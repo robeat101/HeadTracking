@@ -108,7 +108,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// <summary>
         /// Array for the bodies
         /// </summary>
-        private FaceModel face = null;
+        private FaceFrameResult face = null;
 
         /// <summary>
         /// definition of bones
@@ -325,8 +325,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 {
                     if (this.face == null)
                     {
-                        this.face = new FaceModel();
-                    }
+                        this.face = faceFrame.FaceFrameResult;
 
                     // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
                     // As long as those body objects are not disposed and not set to null in the array,
