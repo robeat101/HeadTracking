@@ -28,5 +28,11 @@
     <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
       <StatusBarItem Content="{Binding StatusText}" />
     </StatusBar>
-  </Grid>
+        <TextBox x:Name="neckPosition"
+                 HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="NeckPosition" VerticalAlignment="Bottom" Width="120" Margin="54,0,0,0" Grid.Row="2" TextChanged="neckPosition_TextChanged"/>
+        <TextBox x:Name="headPosition"
+                 HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" Text="HeadPosition" VerticalAlignment="Bottom" Width="120" Margin="54,0,0,0" Grid.Row="2"/>
+
+    </Grid>
+
 </Window>

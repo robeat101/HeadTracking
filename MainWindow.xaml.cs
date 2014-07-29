@@ -16,6 +16,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
+  
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -352,6 +353,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
                                 DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
                                 jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
+
+                                if(jointType == JointType.Neck)
+                                {
+                                    neckPosition.Text = depthSpacePoint.X.ToString();
+                                }
                             }
 
                             this.DrawBody(joints, jointPoints, dc, drawPen);
@@ -512,6 +518,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             // on failure, set the status text
             this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
                                                             : Properties.Resources.SensorNotAvailableStatusText;
+        }
+
+        private void neckPosition_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
         }
     }
 }
