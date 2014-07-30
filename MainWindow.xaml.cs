@@ -1,11 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Microsoft.Kinect;
+﻿using Microsoft.Kinect;
 using Microsoft.Kinect.Face;
 using System.Numerics;
+using System.Windows;
 using System.Windows.Forms;
-
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using WindowsInput;
 
 namespace K4W.Expressions
 {
@@ -15,6 +15,12 @@ namespace K4W.Expressions
         /// Instance of Kinect sensor
         /// </summary>
         private KinectSensor _kinect;
+
+        /// <summary>
+        /// Instance of Kinect sensor
+        /// </summary>
+        private bool condition_flag = false;
+
 
         /// <summary>
         /// Body reader
@@ -145,7 +151,6 @@ namespace K4W.Expressions
         {
             // Retrieve the face reference
             FaceFrameReference faceRef = e.FrameReference;
-
             if (faceRef == null) return;
 
             // Acquire the face frame
@@ -155,6 +160,7 @@ namespace K4W.Expressions
 
                 // Retrieve the face frame result
                 FaceFrameResult frameResult = faceFrame.FaceFrameResult;
+
                 // Display the values
                 HappyResult.Text = frameResult.FaceProperties[FaceProperty.Happy].ToString();
                 EngagedResult.Text = frameResult.FaceProperties[FaceProperty.Engaged].ToString();
@@ -164,9 +170,17 @@ namespace K4W.Expressions
                 MouthOpenResult.Text = frameResult.FaceProperties[FaceProperty.MouthOpen].ToString();
                 MouthMovedResult.Text = frameResult.FaceProperties[FaceProperty.MouthMoved].ToString();
                 LookingAwayResult.Text = frameResult.FaceProperties[FaceProperty.LookingAway].ToString();
-                if (frameResult.FaceProperties[FaceProperty.LookingAway].Equals(DetectionResult.No))
+                if (frameResult.FaceProperties[FaceProperty.LookingAway].Equals(DetectionResult.No) && frameResult.FaceProperties[FaceProperty.RightEyeClosed].Equals(DetectionResult.Yes) && this.condition_flag == false)
                 {
-                    SendKeys.SendWait("%{F4}");
+                    this.condition_flag = true;
+                    // Simulate each key stroke
+                    InputSimulator.SimulateKeyDown(VirtualKeyCode.LWIN);
+                    InputSimulator.SimulateKeyPress(VirtualKeyCode.RIGHT);
+                    InputSimulator.SimulateKeyUp(VirtualKeyCode.LWIN);
+                }
+                else if (frameResult.FaceProperties[FaceProperty.RightEyeClosed].Equals(DetectionResult.No))
+                {
+                    this.condition_flag = false;
                 }
             }
         }

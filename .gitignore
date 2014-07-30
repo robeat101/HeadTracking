@@ -20,6 +20,8 @@
 *.out
 *.app
 
+*.sln
+*.suo
 
 # Debug
 **/Debug
