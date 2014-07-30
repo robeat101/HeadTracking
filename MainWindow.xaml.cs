@@ -24,7 +24,7 @@ namespace K4W.Expressions
         private bool AltTabHotkeyPressFlag = false;
         private bool ShiftAltTabHotkeyPressFlag = false;
 
-        private const int BlinkTime = 250;
+        private const int BlinkTime = 10;
         private int CountTime = 0;
 
 
@@ -177,10 +177,10 @@ namespace K4W.Expressions
                 MouthMovedResult.Text = frameResult.FaceProperties[FaceProperty.MouthMoved].ToString();
                 LookingAwayResult.Text = frameResult.FaceProperties[FaceProperty.LookingAway].ToString();
 
-                
+
                 this.MoveWindowLeftHotkeyPress(frameResult);
                 this.MoveWindowRightHotkeyPress(frameResult);
-                this.AltTabHotkeyPress(frameResult);
+                //this.AltTabHotkeyPress(frameResult);
 
             }
         }
@@ -190,9 +190,14 @@ namespace K4W.Expressions
         /// </summary>
         private void MoveWindowLeftHotkeyPress(FaceFrameResult frameResult)
         {
-            if (this.IsEngaged(frameResult) && this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult) && this.MoveWindowLeftHotkeyPressFlag == false)
+            if (this.IsEngaged(frameResult) && this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult) && this.AllFlagsAreFalse())
             {
-                System.Threading.Thread.Sleep(BlinkTime);
+                this.MoveWindowLeftHotkeyPressFlag = true;
+                this.CountTime = 0;
+            }
+
+            if (this.MoveWindowLeftHotkeyPressFlag == true && this.CountTime >= BlinkTime)
+            {
                 if (this.IsEngaged(frameResult) && this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
                 {
                     this.MoveWindowLeftHotkeyPressFlag = true;
@@ -201,10 +206,14 @@ namespace K4W.Expressions
                     InputSimulator.SimulateKeyPress(VirtualKeyCode.LEFT);
                     InputSimulator.SimulateKeyUp(VirtualKeyCode.LWIN);
                 }
+                else if (!this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
+                {
+                    this.MoveWindowLeftHotkeyPressFlag = false;
+                }
             }
-            else if (!this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
+            else if (this.MoveWindowLeftHotkeyPressFlag == true)
             {
-                this.MoveWindowLeftHotkeyPressFlag = false;
+                this.CountTime += 1;
             }
         }
 
@@ -212,11 +221,27 @@ namespace K4W.Expressions
         /// <summary>
         /// Shift window right with right eye wink at the camera
         /// </summary>
+        private bool AllFlagsAreFalse()
+        {
+            return !(this.AltTabHotkeyPressFlag || this.MoveWindowLeftHotkeyPressFlag || this.MoveWindowRightHotkeyPressFlag || this.ShiftAltTabHotkeyPressFlag);
+
+        }
+
+
+
+        /// <summary>
+        /// Shift window right with right eye wink at the camera
+        /// </summary>
         private void MoveWindowRightHotkeyPress(FaceFrameResult frameResult)
         {
-            if (this.IsEngaged(frameResult) && !this.IsLeftEyeClosed(frameResult) && this.IsRightEyeClosed(frameResult) && this.MoveWindowRightHotkeyPressFlag == false)
+            if (this.IsEngaged(frameResult) && !this.IsLeftEyeClosed(frameResult) && this.IsRightEyeClosed(frameResult) && this.AllFlagsAreFalse())
             {
-                System.Threading.Thread.Sleep(BlinkTime);
+                this.MoveWindowRightHotkeyPressFlag = true;
+                this.CountTime = 0;
+            }
+
+            if (this.MoveWindowRightHotkeyPressFlag == true && this.CountTime >= BlinkTime)
+            {
                 if (this.IsEngaged(frameResult) && !this.IsLeftEyeClosed(frameResult) && this.IsRightEyeClosed(frameResult))
                 {
                     this.MoveWindowRightHotkeyPressFlag = true;
@@ -225,13 +250,16 @@ namespace K4W.Expressions
                     InputSimulator.SimulateKeyPress(VirtualKeyCode.RIGHT);
                     InputSimulator.SimulateKeyUp(VirtualKeyCode.LWIN);
                 }
+                else if (!this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
+                {
+                    this.MoveWindowLeftHotkeyPressFlag = false;
+                }
             }
-            else if (!this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
+            else if (this.MoveWindowLeftHotkeyPressFlag == true)
             {
-                this.MoveWindowRightHotkeyPressFlag = false;
+                this.CountTime += 1;
             }
         }
-
         /// <summary>
         /// Alt-tab left with left eye wink at camera while being happy
         /// </summary>
@@ -268,7 +296,7 @@ namespace K4W.Expressions
         {
             return frameResult.FaceProperties[FaceProperty.RightEyeClosed].Equals(DetectionResult.Yes);
         }
-        
+
         /// <summary>
         /// Is the user looking at the camera? 
         /// </summary>
@@ -284,7 +312,7 @@ namespace K4W.Expressions
         {
             return frameResult.FaceProperties[FaceProperty.Happy].Equals(DetectionResult.Yes);
         }
-        
+
 
         /// <summary>
         /// Handle when the tracked body is gone
