@@ -17,9 +17,15 @@ namespace K4W.Expressions
         private KinectSensor _kinect;
 
         /// <summary>
-        /// Instance of Kinect sensor
+        /// Flages for hotkey presses
         /// </summary>
-        private bool condition_flag = false;
+        private bool MoveWindowRightHotkeyPressFlag = false;
+        private bool MoveWindowLeftHotkeyPressFlag = false;
+        private bool AltTabHotkeyPressFlag = false;
+        private bool ShiftAltTabHotkeyPressFlag = false;
+
+        private const int BlinkTime = 250;
+        private int CountTime = 0;
 
 
         /// <summary>
@@ -170,21 +176,115 @@ namespace K4W.Expressions
                 MouthOpenResult.Text = frameResult.FaceProperties[FaceProperty.MouthOpen].ToString();
                 MouthMovedResult.Text = frameResult.FaceProperties[FaceProperty.MouthMoved].ToString();
                 LookingAwayResult.Text = frameResult.FaceProperties[FaceProperty.LookingAway].ToString();
-                if (frameResult.FaceProperties[FaceProperty.LookingAway].Equals(DetectionResult.No) && frameResult.FaceProperties[FaceProperty.RightEyeClosed].Equals(DetectionResult.Yes) && this.condition_flag == false)
+
+                
+                this.MoveWindowLeftHotkeyPress(frameResult);
+                this.MoveWindowRightHotkeyPress(frameResult);
+                this.AltTabHotkeyPress(frameResult);
+
+            }
+        }
+
+        /// <summary>
+        /// Shift window left with left eye wink at camera
+        /// </summary>
+        private void MoveWindowLeftHotkeyPress(FaceFrameResult frameResult)
+        {
+            if (this.IsEngaged(frameResult) && this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult) && this.MoveWindowLeftHotkeyPressFlag == false)
+            {
+                System.Threading.Thread.Sleep(BlinkTime);
+                if (this.IsEngaged(frameResult) && this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
                 {
-                    this.condition_flag = true;
+                    this.MoveWindowLeftHotkeyPressFlag = true;
+                    // Simulate each key stroke
+                    InputSimulator.SimulateKeyDown(VirtualKeyCode.LWIN);
+                    InputSimulator.SimulateKeyPress(VirtualKeyCode.LEFT);
+                    InputSimulator.SimulateKeyUp(VirtualKeyCode.LWIN);
+                }
+            }
+            else if (!this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
+            {
+                this.MoveWindowLeftHotkeyPressFlag = false;
+            }
+        }
+
+
+        /// <summary>
+        /// Shift window right with right eye wink at the camera
+        /// </summary>
+        private void MoveWindowRightHotkeyPress(FaceFrameResult frameResult)
+        {
+            if (this.IsEngaged(frameResult) && !this.IsLeftEyeClosed(frameResult) && this.IsRightEyeClosed(frameResult) && this.MoveWindowRightHotkeyPressFlag == false)
+            {
+                System.Threading.Thread.Sleep(BlinkTime);
+                if (this.IsEngaged(frameResult) && !this.IsLeftEyeClosed(frameResult) && this.IsRightEyeClosed(frameResult))
+                {
+                    this.MoveWindowRightHotkeyPressFlag = true;
                     // Simulate each key stroke
                     InputSimulator.SimulateKeyDown(VirtualKeyCode.LWIN);
                     InputSimulator.SimulateKeyPress(VirtualKeyCode.RIGHT);
                     InputSimulator.SimulateKeyUp(VirtualKeyCode.LWIN);
                 }
-                else if (frameResult.FaceProperties[FaceProperty.RightEyeClosed].Equals(DetectionResult.No))
-                {
-                    this.condition_flag = false;
-                }
+            }
+            else if (!this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
+            {
+                this.MoveWindowRightHotkeyPressFlag = false;
             }
         }
 
+        /// <summary>
+        /// Alt-tab left with left eye wink at camera while being happy
+        /// </summary>
+        private void AltTabHotkeyPress(FaceFrameResult frameResult)
+        {
+            if (this.IsEngaged(frameResult) && this.IsHappy(frameResult) && this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult) && this.AltTabHotkeyPressFlag == false)
+            {
+                System.Threading.Thread.Sleep(BlinkTime);
+                if (this.IsEngaged(frameResult) && this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
+                {
+                    this.AltTabHotkeyPressFlag = true;
+                    // Simulate each key stroke
+                    InputSimulator.SimulateKeyPress(VirtualKeyCode.TAB);
+                }
+            }
+            else if (!this.IsLeftEyeClosed(frameResult) && !this.IsRightEyeClosed(frameResult))
+            {
+                this.AltTabHotkeyPressFlag = false;
+            }
+        }
+
+        /// <summary>
+        /// Left Eye is Closed? 
+        /// </summary>
+        private bool IsLeftEyeClosed(FaceFrameResult frameResult)
+        {
+            return frameResult.FaceProperties[FaceProperty.LeftEyeClosed].Equals(DetectionResult.Yes);
+        }
+
+        /// <summary>
+        /// Right Eye is Closed? 
+        /// </summary>
+        private bool IsRightEyeClosed(FaceFrameResult frameResult)
+        {
+            return frameResult.FaceProperties[FaceProperty.RightEyeClosed].Equals(DetectionResult.Yes);
+        }
+        
+        /// <summary>
+        /// Is the user looking at the camera? 
+        /// </summary>
+        private bool IsEngaged(FaceFrameResult frameResult)
+        {
+            return frameResult.FaceProperties[FaceProperty.Engaged].Equals(DetectionResult.Yes);
+        }
+
+        /// <summary>
+        /// Is the user Happy? 
+        /// </summary>
+        private bool IsHappy(FaceFrameResult frameResult)
+        {
+            return frameResult.FaceProperties[FaceProperty.Happy].Equals(DetectionResult.Yes);
+        }
+        
 
         /// <summary>
         /// Handle when the tracked body is gone
@@ -224,6 +324,7 @@ namespace K4W.Expressions
         /// Size fo the RGB pixel in bitmap
         /// </summary>
         private readonly int _bytePerPixel = (PixelFormats.Bgr32.BitsPerPixel + 7) / 8;
+
         private void InitializeCamera()
         {
             if (_kinect == null) return;
